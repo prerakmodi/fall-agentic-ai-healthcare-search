@@ -48,21 +48,21 @@ class TestContextFormatting:
         ]
 
     def test_format_context_includes_all_docs(self, generator, sample_docs):
-        context = generator._format_context(sample_docs)
+        context = generator.format_context(sample_docs)
         assert "Hypertension Overview" in context
         assert "Blood Pressure Guide" in context
 
     def test_format_context_includes_source_types(self, generator, sample_docs):
-        context = generator._format_context(sample_docs)
+        context = generator.format_context(sample_docs)
         assert "MSD" in context
         assert "PDF" in context
 
     def test_format_context_includes_urls_when_present(self, generator, sample_docs):
-        context = generator._format_context(sample_docs)
+        context = generator.format_context(sample_docs)
         assert "https://example.com/hypertension" in context
 
     def test_format_context_handles_missing_url(self, generator, sample_docs):
-        context = generator._format_context(sample_docs)
+        context = generator.format_context(sample_docs)
         assert "Blood Pressure Guide" in context
 
 class TestPromptBuilding:
