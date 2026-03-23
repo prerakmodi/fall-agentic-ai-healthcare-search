@@ -1,0 +1,159 @@
+<!-- This file defines the structure of the user interface.
+It lays out the full chat application, including the left
+sidebar for saved conversations, the main chat area for user
+and assistant messages, the composer for sending new questions,
+and the right-side document review panel for uploading medical 
+files and previewing breakdown tools. It does not contain backend
+logic itself; it provides the HTML elements that the CSS styles 
+and the JavaScript controls.-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Healthcare Assistant</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="brand">
+          <div class="brand-logo">H+</div>
+          <div>
+            <h1>Healthcare Assistant</h1>
+            <p>Source-grounded medical explanations in plain language</p>
+          </div>
+        </div>
+
+        <button id="newChatBtn" class="primary-soft-btn full-width">+ New conversation</button>
+      </div>
+
+      <div class="sidebar-section-label">Conversations</div>
+      <div id="conversationList" class="conversation-list"></div>
+
+      <div class="sidebar-bottom">
+        <div class="user-chip">
+          <div class="user-avatar">N</div>
+          <div>
+            <div class="user-name">Noemia</div>
+            <div class="user-meta">Frontend live mode</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="chat-panel">
+      <header class="chat-header">
+        <div>
+          <h2 id="chatTitle">New conversation</h2>
+          <p id="backendStatusText">Connecting to backend...</p>
+        </div>
+
+        <div class="chat-header-actions">
+          <button id="toggleReviewBtn" class="ghost-btn">Document review</button>
+          <button id="scrollBottomBtn" class="ghost-btn">Latest</button>
+        </div>
+      </header>
+
+      <section id="chatMessages" class="chat-messages">
+        <div class="date-pill">Today</div>
+
+        <div class="intro-card">
+          <div class="mini-label">Welcome</div>
+          <p>
+            Ask a medical question, upload a document, and review source-backed answers.
+            Retrieved sources will appear directly under assistant responses.
+          </p>
+        </div>
+      </section>
+
+      <footer class="chat-composer-wrap">
+        <div class="suggestions" id="suggestions">
+          <button class="suggestion-chip">What is hypertension?</button>
+          <button class="suggestion-chip">Explain my discharge summary</button>
+          <button class="suggestion-chip">What causes chest pain?</button>
+          <button class="suggestion-chip">What should I ask my doctor?</button>
+        </div>
+
+        <div class="chat-composer">
+          <div class="composer-tools">
+            <button id="mentionUploadBtn" class="tool-btn">Use uploaded document</button>
+            <button id="clearMessagesBtn" class="tool-btn">Clear current chat</button>
+          </div>
+
+          <div class="composer-main">
+            <textarea
+              id="messageInput"
+              placeholder="Message the healthcare assistant..."
+              rows="1"
+            ></textarea>
+            <button id="sendBtn" class="send-btn">Send</button>
+          </div>
+
+          <div class="composer-footer">
+            <span>Answers are expected to come from your Flask backend</span>
+            <span id="composerStatus">Ready</span>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <aside class="review-panel" id="reviewPanel">
+      <div class="review-header">
+        <h3>Document review & breakdown</h3>
+        <p>Upload a medical document and ask the assistant to explain it in plain language.</p>
+      </div>
+
+      <div class="review-content">
+        <div class="review-section-label">Upload</div>
+
+        <label class="upload-zone" for="fileInput">
+          <input id="fileInput" type="file" accept=".pdf,.txt,.doc,.docx,.png,.jpg,.jpeg" hidden />
+          <div class="upload-icon">+</div>
+          <h4>Drop in a medical document</h4>
+          <p>Lab report, discharge summary, doctor note, medication sheet, or imaging summary.</p>
+          <span class="primary-soft-btn inline-btn">Choose file</span>
+        </label>
+
+        <div class="review-section-label">Current file</div>
+        <div id="fileCard" class="file-card empty">
+          <div class="file-name">No file uploaded yet</div>
+          <p class="file-meta">Upload a file to begin document review.</p>
+        </div>
+
+        <div class="review-section-label">Breakdown shortcuts</div>
+        <div class="breakdown-grid">
+          <button class="breakdown-card" data-prompt="Explain this document in simple language.">Explain simply</button>
+          <button class="breakdown-card" data-prompt="Summarize the medications in this document.">Medication summary</button>
+          <button class="breakdown-card" data-prompt="What follow-up steps does this document suggest?">Follow-up steps</button>
+          <button class="breakdown-card" data-prompt="What urgent warning signs are mentioned here?">Warning signs</button>
+        </div>
+
+        <div class="review-section-label">How it should behave</div>
+        <div class="breakdown-list">
+          <div class="breakdown-item">
+            <strong>Main diagnosis</strong>
+            <span>Clearly restates the biggest issue in patient-friendly language.</span>
+          </div>
+          <div class="breakdown-item">
+            <strong>What changed</strong>
+            <span>Highlights medications, findings, or care-plan updates.</span>
+          </div>
+          <div class="breakdown-item">
+            <strong>Next steps</strong>
+            <span>Turns instructions into a short, understandable checklist.</span>
+          </div>
+          <div class="breakdown-item">
+            <strong>Red flags</strong>
+            <span>Separates routine guidance from symptoms that might need urgent care.</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
