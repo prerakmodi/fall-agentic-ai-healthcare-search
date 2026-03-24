@@ -98,9 +98,10 @@ def convert_chunks_to_sources(chunks: list[dict]) -> list[dict]:
         text = chunk.get("text", "") or ""
         score = chunk.get("score", None)
         chunk_id = chunk.get("id", None)
+        chunk_source = chunk.get("source", f"Chunk {i}")
 
         sources.append({
-            "title": f"Retrieved Chunk {i}" + (f" (ID {chunk_id})" if chunk_id is not None else ""),
+            "title": f"Source: {chunk_source}" + (f" (ID {chunk_id})" if chunk_id is not None else ""),
             "snippet": text[:350].strip(),
             "score": round(float(score), 4) if score is not None else None
         })
